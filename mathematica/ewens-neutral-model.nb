@@ -1,0 +1,1271 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 8.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[     38595,       1262]
+NotebookOptionsPosition[     33348,       1074]
+NotebookOutlinePosition[     33758,       1092]
+CellTagsIndexPosition[     33715,       1089]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["\<\
+Calculating Expected Number of Traits in Population\
+\>", "Section",
+ CellChangeTimes->{{3.538771516408327*^9, 3.5387715294314547`*^9}}],
+
+Cell["\<\
+Equation 2 from Ewens 1972.  The \[OpenCurlyDoubleQuote]effective number of \
+alleles\[CloseCurlyDoubleQuote] in the population is the reciprocal of the \
+probability F that two genes drawn at random from the population are the same \
+allelic type.  This comes from Crow and Kimura (1964).  If we take the \
+reciprocal first by not including that factor in the equation, we have:\
+\>", "Text",
+ CellChangeTimes->{{3.5387661291756496`*^9, 3.5387661526761093`*^9}, {
+  3.538766200461149*^9, 3.538766214692708*^9}, {3.5387664418150663`*^9, 
+  3.538766479235867*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"F", " ", "=", " ", 
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{"N", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"1", "-", "u"}], ")"}], "^", 
+      RowBox[{"{", 
+       RowBox[{"-", "2"}], "}"}]}]}], " ", "-", " ", "N", "+", "1"}], 
+   ")"}]}]], "Input",
+ CellChangeTimes->{{3.538764735234414*^9, 3.538764785448082*^9}, 
+   3.5387648214571247`*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"1", "-", "N", "+", 
+   FractionBox["N", 
+    SuperscriptBox[
+     RowBox[{"(", 
+      RowBox[{"1", "-", "u"}], ")"}], "2"]]}], "}"}]], "Output",
+ CellChangeTimes->{3.538764787697342*^9, 3.538764822492112*^9, 
+  3.539463119403489*^9, 3.541181515156803*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"F", " ", "/.", " ", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"N", "\[Rule]", "1000"}], ",", " ", 
+    RowBox[{"u", " ", "\[Rule]", " ", "0.005"}]}], "}"}]}]], "Input",
+ CellChangeTimes->{{3.538764799005843*^9, 3.538764811638122*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", "11.075503143859919`", "}"}]], "Output",
+ CellChangeTimes->{{3.538764812810815*^9, 3.53876482554699*^9}, 
+   3.539463119519446*^9, 3.54118151528786*^9}]
+}, Open  ]],
+
+Cell["\<\
+This is actually really quite low given the population size and mutation \
+rate, but Ewens describes using the \[OpenCurlyDoubleQuote]variance-effective \
+population size\[CloseCurlyDoubleQuote], for which I\[CloseCurlyQuote]m not \
+correcting here.  
+
+On the other hand, we can use the integral of the frequency spectrum (Ewens \
+1972, equation 4) to find the expected number of alleles in the population, \
+given a value of \[Theta].  \
+\>", "Text",
+ CellChangeTimes->{{3.5387664908545237`*^9, 3.538766502315835*^9}, {
+  3.538766536819653*^9, 3.538766553139804*^9}, {3.53876662695673*^9, 
+  3.538766656397546*^9}, {3.538766695414171*^9, 3.538766719131974*^9}, {
+  3.538768075461694*^9, 3.538768124547388*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"K", " ", "=", " ", 
+  RowBox[{"\[Theta]", 
+   RowBox[{
+    SubsuperscriptBox["\[Integral]", 
+     RowBox[{"1", "/", "N"}], "1"], 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"1", "/", "x"}], ")"}], 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"1", "-", "x"}], ")"}], "^", 
+      RowBox[{"{", 
+       RowBox[{"\[Theta]", "-", "1"}], "}"}]}], 
+     RowBox[{"\[DifferentialD]", "x"}]}]}]}]}]], "Input",
+ CellChangeTimes->{{3.538764860995339*^9, 3.5387649297387667`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"ConditionalExpression", "[", 
+   RowBox[{
+    RowBox[{
+     FractionBox["1", "N"], 
+     RowBox[{"\[Theta]", " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"-", "1"}], "+", "\[Theta]"}], ")"}], " ", 
+         RowBox[{"HypergeometricPFQ", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"1", ",", "1", ",", 
+             RowBox[{"2", "-", "\[Theta]"}]}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"2", ",", "2"}], "}"}], ",", 
+           FractionBox["1", "N"]}], "]"}]}], "+", 
+        RowBox[{"N", " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"-", 
+            RowBox[{"HarmonicNumber", "[", 
+             RowBox[{
+              RowBox[{"-", "1"}], "+", "\[Theta]"}], "]"}]}], "+", 
+           RowBox[{"Log", "[", "N", "]"}]}], ")"}]}]}], ")"}]}]}], ",", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Re", "[", "\[Theta]", "]"}], ">", "0"}], "&&", 
+     RowBox[{"N", ">", "1"}]}]}], "]"}], "}"}]], "Output",
+ CellChangeTimes->{3.538764936180278*^9, 3.539463123522449*^9, 
+  3.5411815191690197`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"K", " ", "/.", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"N", " ", "\[Rule]", " ", "1000"}], ",", " ", 
+     RowBox[{"\[Theta]", " ", "\[Rule]", " ", "10"}]}], "}"}]}], " ", "//", 
+  " ", "N"}]], "Input",
+ CellChangeTimes->{{3.538764935918264*^9, 3.5387649598707743`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", "40.87769052982408`", "}"}]], "Output",
+ CellChangeTimes->{3.538764961220471*^9, 3.539463123643527*^9, 
+  3.541181519313765*^9}]
+}, Open  ]],
+
+Cell["\<\
+This is a much better estimate for the total population of alleles, but with \
+repeated runs of the standard Wright-Fisher model with 1000 individuals, and \
+a mutation rate of 0.005, the expected value for the number of traits in the \
+population at any given time is about 45.  
+
+We can probably do better by using the balance between mutation and the loss \
+of traits, as measured by their average lifetime, compared to the population \
+size.  First, however, we need a good approximation for the average lifetime \
+of a trait.\
+\>", "Text",
+ CellChangeTimes->{{3.538769027540751*^9, 3.538769039458956*^9}, {
+  3.538769688988731*^9, 3.538769731625412*^9}, {3.538769795718772*^9, 
+  3.538769866641366*^9}, {3.5387700903707037`*^9, 3.538770101673267*^9}, {
+  3.53877019902536*^9, 3.538770232193493*^9}, {3.538770437715477*^9, 
+  3.5387704690203533`*^9}, {3.5387714154474277`*^9, 3.538771494975615*^9}, {
+  3.538771545515462*^9, 3.538771555767181*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Trait Lifetime", "Section",
+ CellChangeTimes->{{3.5387714397844067`*^9, 3.538771442471361*^9}}],
+
+Cell["\<\
+In chapter 3 of Ewens 2004, he is estimating E(K_pop) = 2N\[Mu] E(T), where \
+E(T) is the expected time that any allele remains in the population.  Given \
+Equation 3.19 (Ewens 2004), Equation 3.20, and Eq. 3.22, we should be able to \
+calculate E(K_pop).   In the special case that \[Theta] = 2, Equation 3.21 \
+simplifies to 3.22, giving a very simple expression for the average lifetime. \
+ \
+\>", "Text",
+ CellChangeTimes->{{3.5387714525074263`*^9, 3.538771470032234*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"t", "[", 
+   RowBox[{"p_", ",", " ", "N_"}], "]"}], " ", ":=", " ", 
+  FractionBox[
+   RowBox[{
+    RowBox[{"-", "2"}], "N", " ", "p", " ", 
+    RowBox[{"Log", "[", "p", "]"}]}], 
+   RowBox[{"1", "-", "p"}]]}]], "Input",
+ CellChangeTimes->{{3.5387702365551023`*^9, 3.5387702484198923`*^9}, {
+  3.53877031163536*^9, 3.538770372196847*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"t", "[", 
+   RowBox[{
+    RowBox[{"1", "/", "1000"}], ",", " ", "1000"}], "]"}], " ", "//", " ", 
+  "N"}]], "Input",
+ CellChangeTimes->{{3.538770380708582*^9, 3.538770406900423*^9}}],
+
+Cell[BoxData["13.829339897862138`"], "Output",
+ CellChangeTimes->{3.5387707562629423`*^9, 3.5394631237098713`*^9, 
+  3.541181519418879*^9}]
+}, Open  ]],
+
+Cell["\<\
+And this turns out to be a pretty good approximation to simulation results \
+with N = 1000 and \[Mu] = 0.001 (in a haploid WF model, we drop a factor of \
+two to calculate \[Theta]).  On several runs, the mean lifetime value seems \
+to hover around 11-13, but with a massive variance.  
+
+For arbitrary values of \[Theta], we may have to operate with Equation 3.20, \
+which is given as an infinite sum:\
+\>", "Text",
+ CellChangeTimes->{{3.538770679776615*^9, 3.538770801391863*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"t\[Theta]", "[", 
+   RowBox[{"p_", ",", " ", "N_", ",", " ", "\[Theta]_"}], "]"}], " ", ":=", 
+  " ", 
+  RowBox[{
+   UnderoverscriptBox["\[Sum]", 
+    RowBox[{"j", "=", "1"}], "\[Infinity]"], 
+   RowBox[{
+    FractionBox[
+     RowBox[{"2", "N"}], 
+     RowBox[{"j", 
+      RowBox[{"(", 
+       RowBox[{"j", "-", "1", "+", " ", "\[Theta]"}], ")"}]}]], 
+    RowBox[{"(", 
+     RowBox[{"1", "-", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"1", "-", "p"}], ")"}], "^", "j"}]}], ")"}]}]}]}]], "Input",
+ CellChangeTimes->{{3.5387708044368763`*^9, 3.5387709014336977`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"t\[Theta]", "[", 
+   RowBox[{
+    RowBox[{"1", "/", "1000"}], ",", " ", "1000", ",", " ", "10"}], "]"}], 
+  " ", "//", " ", "N"}]], "Input",
+ CellChangeTimes->{{3.538771140169832*^9, 3.538771159594322*^9}}],
+
+Cell[BoxData["10.212572347414168`"], "Output",
+ CellChangeTimes->{{3.538771152715989*^9, 3.538771160651618*^9}, 
+   3.5394631241279173`*^9, 3.5411815198561373`*^9}]
+}, Open  ]],
+
+Cell["\<\
+And this is a good approximation to simulated results, which seem to hover \
+around 9.7, and again with a large (but much smaller) standard deviation.  \
+\>", "Text",
+ CellChangeTimes->{{3.5387713516902847`*^9, 3.5387713953032513`*^9}}],
+
+Cell["", "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Expected Number of Alleles - 3.91 Method\
+\>", "Section",
+ CellChangeTimes->{{3.538771572232584*^9, 3.538771576407551*^9}, {
+  3.538772075246941*^9, 3.538772083398871*^9}}],
+
+Cell["\<\
+Again, given an expression for the mean lifetime of a trait, we can \
+immediately estimate the expected number of traits in the population as:\
+\>", "Text",
+ CellChangeTimes->{{3.538771583737728*^9, 3.538771611959494*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Clear", "[", "Kpop", "]"}]], "Input",
+ CellChangeTimes->{{3.538771619760159*^9, 3.538771622384122*^9}, {
+  3.5387716555540752`*^9, 3.53877172585655*^9}, {3.538771850323202*^9, 
+  3.5387719100089903`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Kpop", "[", 
+   RowBox[{"N_", ",", " ", "\[Mu]_"}], "]"}], " ", "=", " ", 
+  RowBox[{
+   RowBox[{"N", " ", "*", " ", "\[Mu]", " ", "*", " ", 
+    RowBox[{"t\[Theta]", "[", 
+     RowBox[{
+      RowBox[{"1", "/", "1000"}], ",", " ", "1000", ",", " ", "10"}], "]"}]}],
+    " ", "//", " ", "N"}]}]], "Input",
+ CellChangeTimes->{{3.538771913313032*^9, 3.538771985152804*^9}}],
+
+Cell[BoxData[
+ RowBox[{"10.212572347414168`", " ", "N", " ", "\[Mu]"}]], "Output",
+ CellChangeTimes->{3.5394631241973543`*^9, 3.541181519912278*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"10.212572347414168`", " ", "N", " ", "\[Mu]"}], "  ", "/.", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"N", " ", "\[Rule]", " ", "1000"}], ",", " ", 
+     RowBox[{"\[Mu]", "\[Rule]", "0.005"}]}], "}"}]}], " ", "//", " ", 
+  "N"}]], "Input",
+ CellChangeTimes->{{3.5387719970388927`*^9, 3.538772026275057*^9}}],
+
+Cell[BoxData["51.06286173707085`"], "Output",
+ CellChangeTimes->{3.538772027205282*^9, 3.539463124230432*^9, 
+  3.541181519953947*^9}]
+}, Open  ]],
+
+Cell["\<\
+Thus, in a simulated population with 1000 agents, an innovation rate of 0.001 \
+per generation, we tend to see 45-47 traits as the average number per \
+generation in the population, with a fairly narrow standard deviation in the \
+5-7 range.  Let\[CloseCurlyQuote]s see what the calculated approximation is \
+51.  That\[CloseCurlyQuote]s pretty good, I think.  \
+\>", "Text",
+ CellChangeTimes->{{3.538771743344365*^9, 3.538771802815528*^9}, {
+  3.538772048112211*^9, 3.53877205753503*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Expected Number of Alleles - 3.92 Method\
+\>", "Section",
+ CellChangeTimes->{{3.5387721005200043`*^9, 3.538772108910863*^9}}],
+
+Cell["\<\
+Putting these elements together (3.19, which I have not represented \
+explicitly here since it\[CloseCurlyQuote]s a piecewise equation), leads to \
+Ewens\[CloseCurlyQuote]s Equation 3.92, which is naturally an approximation:\
+\>", "Text",
+ CellChangeTimes->{{3.53877212386493*^9, 3.5387721570390263`*^9}, {
+  3.538772313743176*^9, 3.538772317615362*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"K392", " ", "=", " ", 
+  RowBox[{"\[Theta]", " ", "+", " ", 
+   RowBox[{
+    SubsuperscriptBox["\[Integral]", 
+     RowBox[{"1", "/", "N"}], "1"], 
+    RowBox[{
+     FractionBox["\[Theta]", "x"], 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"1", "-", "x"}], ")"}], "^", 
+      RowBox[{"{", 
+       RowBox[{"\[Theta]", "-", "1"}], "}"}]}], 
+     RowBox[{"\[DifferentialD]", "x"}]}]}]}]}]], "Input",
+ CellChangeTimes->{{3.538772164731275*^9, 3.538772242441894*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"ConditionalExpression", "[", 
+   RowBox[{
+    RowBox[{"\[Theta]", "+", 
+     RowBox[{
+      FractionBox["1", "N"], 
+      RowBox[{"\[Theta]", " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"-", "1"}], "+", "\[Theta]"}], ")"}], " ", 
+          RowBox[{"HypergeometricPFQ", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"1", ",", "1", ",", 
+              RowBox[{"2", "-", "\[Theta]"}]}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"2", ",", "2"}], "}"}], ",", 
+            FractionBox["1", "N"]}], "]"}]}], "+", 
+         RowBox[{"N", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"-", 
+             RowBox[{"HarmonicNumber", "[", 
+              RowBox[{
+               RowBox[{"-", "1"}], "+", "\[Theta]"}], "]"}]}], "+", 
+            RowBox[{"Log", "[", "N", "]"}]}], ")"}]}]}], ")"}]}]}]}], ",", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Re", "[", "\[Theta]", "]"}], ">", "0"}], "&&", 
+     RowBox[{"N", ">", "1"}]}]}], "]"}], "}"}]], "Output",
+ CellChangeTimes->{3.53877225148063*^9, 3.5394631260625963`*^9, 
+  3.541181521735035*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"K392", " ", "/.", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"N", "\[Rule]", "1000"}], ",", " ", 
+     RowBox[{"\[Theta]", "\[Rule]", "10"}]}], "}"}]}], " ", "//", " ", 
+  "N"}]], "Input",
+ CellChangeTimes->{{3.538772117711562*^9, 3.5387721196657867`*^9}, {
+  3.538772270128771*^9, 3.5387722880249147`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", "50.87769052982408`", "}"}]], "Output",
+ CellChangeTimes->{3.538772288894678*^9, 3.539463126182822*^9, 
+  3.541181521920165*^9}]
+}, Open  ]],
+
+Cell["\<\
+Very nice.  I suspect all of these approximations are biased on the high \
+side, although I\[CloseCurlyQuote]d need to look at the behavior across \
+values of \[Theta] to conclude this.  Certainly at \[Theta] >> 1, the \
+approximations seem to be very slightly higher than the simulated values.  \
+\>", "Text",
+ CellChangeTimes->{{3.5387722980883503`*^9, 3.5387723693668833`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Expected Number of Alleles in Sample - 3.94 Method\
+\>", "Section",
+ CellChangeTimes->{{3.538772522592605*^9, 3.538772530047711*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"k394", " ", "=", " ", 
+  RowBox[{
+   SubsuperscriptBox["\[Integral]", "0", "1"], 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"1", "-", 
+      SuperscriptBox[
+       RowBox[{"(", 
+        RowBox[{"1", "-", "x"}], ")"}], "n"]}], ")"}], 
+    FractionBox["\[Theta]", "x"], 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"1", "-", "x"}], ")"}], "^", 
+     RowBox[{"{", 
+      RowBox[{"\[Theta]", "-", "1"}], "}"}]}], " ", 
+    RowBox[{"\[DifferentialD]", "x"}]}]}]}]], "Input",
+ CellChangeTimes->{{3.53877251367247*^9, 3.538772653553975*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"ConditionalExpression", "[", 
+   RowBox[{
+    RowBox[{"\[Theta]", " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"-", 
+        RowBox[{"PolyGamma", "[", 
+         RowBox[{"0", ",", "\[Theta]"}], "]"}]}], "+", 
+       RowBox[{"PolyGamma", "[", 
+        RowBox[{"0", ",", 
+         RowBox[{"n", "+", "\[Theta]"}]}], "]"}]}], ")"}]}], ",", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Re", "[", 
+       RowBox[{"n", "+", "\[Theta]"}], "]"}], ">", "0"}], "&&", 
+     RowBox[{
+      RowBox[{"Re", "[", "\[Theta]", "]"}], ">", "0"}]}]}], "]"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.538772657433529*^9, 3.539463128091*^9, 
+  3.541181523796179*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"k394", " ", "/.", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"\[Theta]", "\[Rule]", "10"}], ",", " ", 
+     RowBox[{"n", "\[Rule]", "30"}]}], "}"}]}], " ", "//", " ", 
+  "N"}]], "Input",
+ CellChangeTimes->{{3.5387726616136208`*^9, 3.538772685562202*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", "14.24574784968122`", "}"}]], "Output",
+ CellChangeTimes->{3.5387726866556377`*^9, 3.539463128223875*^9, 
+  3.541181523919278*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ "This is exactly the same answer as the expectation of the full distribution \
+from ",
+ ButtonBox["convolution-k_n.nb",
+  BaseStyle->"Hyperlink",
+  ButtonData->{"convolution-k_n.nb", None}],
+ " (function \[OpenCurlyDoubleQuote]f\[CloseCurlyDoubleQuote]).  So this \
+gives us an expression for the mean of that distribution, independent of \
+having to calculate Stirling numbers and Pochhammer symbols.  "
+}], "Text",
+ CellChangeTimes->{{3.5387727151918592`*^9, 3.538772790670702*^9}, {
+  3.53877287729697*^9, 3.538772895207286*^9}}],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.538772708727069*^9, 3.538772709671967*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Expected Number of Alleles to Match Simulation Values\
+\>", "Section",
+ CellChangeTimes->{{3.5394631732595387`*^9, 3.5394631837491198`*^9}}],
+
+Cell["", "Text"],
+
+Cell["\<\
+In simulations, I am using a variety of theta values to \
+\[OpenCurlyDoubleQuote]sweep\[CloseCurlyDoubleQuote] the parameter space and \
+understand the effects of time-averaging.  Here I use the equation 3.94 \
+method to calculate expected values without going back to the full \
+distribution.  \
+\>", "Text",
+ CellChangeTimes->{{3.539463189640329*^9, 3.5394632317573557`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"theta_levels", " ", "=", " ", 
+  RowBox[{"List", "[", 
+   RowBox[{
+   "2", ",", "4", ",", "8", ",", "12", ",", "16", ",", "20", ",", "40"}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.539463235702052*^9, 3.539463251892888*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "2", ",", "4", ",", "8", ",", "12", ",", "16", ",", "20", ",", "40"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.5394632539163713`*^9, 3.54118152397211*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"k394", " ", "/.", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"\[Theta]", "\[Rule]", "2"}], ",", " ", 
+     RowBox[{"n", "\[Rule]", "30"}]}], "}"}]}], " ", "//", " ", 
+  "N"}]], "Input",
+ CellChangeTimes->{3.539463852745199*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", "6.05449039087304`", "}"}]], "Output",
+ CellChangeTimes->{3.53946385442198*^9, 3.5411815240289917`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"k394", " ", "/.", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"\[Theta]", "\[Rule]", "4"}], ",", " ", 
+     RowBox[{"n", "\[Rule]", "30"}]}], "}"}]}], " ", "//", " ", 
+  "N"}]], "Input",
+ CellChangeTimes->{{3.539463861905938*^9, 3.539463866047797*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", "9.02185956962487`", "}"}]], "Output",
+ CellChangeTimes->{3.5394638674140043`*^9, 3.541181524061852*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"k394", " ", "/.", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"\[Theta]", "\[Rule]", "8"}], ",", " ", 
+     RowBox[{"n", "\[Rule]", "30"}]}], "}"}]}], " ", "//", " ", 
+  "N"}]], "Input",
+ CellChangeTimes->{3.5394638743182087`*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", "12.869832647716187`", "}"}]], "Output",
+ CellChangeTimes->{3.539463875331815*^9, 3.541181524094158*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"k394", " ", "/.", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"\[Theta]", "\[Rule]", "12"}], ",", " ", 
+     RowBox[{"n", "\[Rule]", "30"}]}], "}"}]}], " ", "//", " ", 
+  "N"}]], "Input",
+ CellChangeTimes->{{3.539463880606196*^9, 3.539463880861039*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", "15.396671255537642`", "}"}]], "Output",
+ CellChangeTimes->{3.539463882364708*^9, 3.541181524125388*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"k394", " ", "/.", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"\[Theta]", "\[Rule]", "16"}], ",", " ", 
+     RowBox[{"n", "\[Rule]", "30"}]}], "}"}]}], " ", "//", " ", 
+  "N"}]], "Input",
+ CellChangeTimes->{{3.539463891679985*^9, 3.539463892871169*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", "17.227505957157263`", "}"}]], "Output",
+ CellChangeTimes->{3.539463894233468*^9, 3.5411815241631804`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"k394", " ", "/.", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"\[Theta]", "\[Rule]", "20"}], ",", " ", 
+     RowBox[{"n", "\[Rule]", "30"}]}], "}"}]}], " ", "//", " ", 
+  "N"}]], "Input",
+ CellChangeTimes->{{3.539463898345213*^9, 3.5394638986687813`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", "18.62931362371486`", "}"}]], "Output",
+ CellChangeTimes->{3.5394638995273867`*^9, 3.541181524222632*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"k394", " ", "/.", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"\[Theta]", "\[Rule]", "40"}], ",", " ", 
+     RowBox[{"n", "\[Rule]", "30"}]}], "}"}]}], " ", "//", " ", 
+  "N"}]], "Input",
+ CellChangeTimes->{{3.5394639036720743`*^9, 3.539463904222241*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", "22.60032017663926`", "}"}]], "Output",
+ CellChangeTimes->{3.539463905706847*^9, 3.541181524293013*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"kest", "[", 
+   RowBox[{"\[Theta]_", ",", " ", "n_"}], "]"}], " ", ":=", " ", 
+  RowBox[{
+   SubsuperscriptBox["\[Integral]", "0", "1"], 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"1", "-", 
+      SuperscriptBox[
+       RowBox[{"(", 
+        RowBox[{"1", "-", "x"}], ")"}], "n"]}], ")"}], 
+    FractionBox["\[Theta]", "x"], 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"1", "-", "x"}], ")"}], "^", 
+     RowBox[{"{", 
+      RowBox[{"\[Theta]", "-", "1"}], "}"}]}], " ", 
+    RowBox[{"\[DifferentialD]", "x"}]}]}]}]], "Input",
+ CellChangeTimes->{{3.539524353057643*^9, 3.539524380735416*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"kest", "[", 
+  RowBox[{"40", ",", " ", "30"}], "]"}]], "Input",
+ CellChangeTimes->{{3.539524488865754*^9, 3.539524493500339*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  FractionBox["1209603971420551876699258427", "53521541374925062110311640"], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.539524495278323*^9, 3.5411815256322603`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"N", "[", "%", "]"}]], "Input",
+ CellChangeTimes->{{3.539524498908813*^9, 3.539524502114874*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", "22.60032017663926`", "}"}]], "Output",
+ CellChangeTimes->{3.5395245030127497`*^9, 3.541181525739977*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"l", " ", "=", " ", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"2", ",", "30"}], "}"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"4", ",", "30"}], "}"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"8", ",", "30"}], "}"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"12", ",", " ", "30"}], "}"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"16", ",", "30"}], "}"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"20", ",", "30"}], "}"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"40", ",", "30"}], "}"}]}], "}"}]}]], "Input",
+ CellChangeTimes->{{3.5395256531529408`*^9, 3.539525692234688*^9}}],
+
+Cell[BoxData[
+ RowBox[{"(", GridBox[{
+    {"2", "30"},
+    {"4", "30"},
+    {"8", "30"},
+    {"12", "30"},
+    {"16", "30"},
+    {"20", "30"},
+    {"40", "30"}
+   }], ")"}]], "Output",
+ CellChangeTimes->{3.539525693941183*^9, 3.541181525778009*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Apply", "[", 
+   RowBox[{"kest", ",", " ", "l", ",", " ", 
+    RowBox[{"{", "1", "}"}]}], "]"}], " ", "//", " ", "N"}]], "Input",
+ CellChangeTimes->{{3.539525696576639*^9, 3.539525722504937*^9}}],
+
+Cell[BoxData[
+ RowBox[{"(", GridBox[{
+    {"6.05449039087304`"},
+    {"9.02185956962487`"},
+    {"12.869832647716187`"},
+    {"15.396671255537642`"},
+    {"17.227505957157263`"},
+    {"18.62931362371486`"},
+    {"22.60032017663926`"}
+   }], ")"}]], "Output",
+ CellChangeTimes->{3.539525730542902*^9, 3.541181533153018*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"l2", " ", "=", " ", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"0.5", ",", " ", "100"}], "}"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"1.0", ",", " ", "100"}], "}"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"10", ",", " ", "100"}], "}"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"50", ",", " ", "100"}], "}"}]}], "}"}]}]], "Input",
+ CellChangeTimes->{{3.5411815339468107`*^9, 3.541181571446377*^9}, {
+  3.5411816229196463`*^9, 3.5411816230618477`*^9}, {3.541181654341137*^9, 
+  3.5411816558429003`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"(", GridBox[{
+    {"0.5`", "100"},
+    {"1.`", "100"},
+    {"10", "100"},
+    {"50", "100"}
+   }], ")"}]], "Output",
+ CellChangeTimes->{3.541181572651574*^9, 3.5411816261042128`*^9, 
+  3.541181658774149*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Apply", "[", 
+   RowBox[{"kest", ",", " ", "l2", ",", " ", 
+    RowBox[{"{", "1", "}"}]}], "]"}], " ", "//", " ", "N"}]], "Input",
+ CellChangeTimes->{{3.5411815812999573`*^9, 3.541181589300641*^9}}],
+
+Cell[BoxData[
+ RowBox[{"(", GridBox[{
+    {"2.046275299705312`*^14"},
+    {"5.187377517639621`"},
+    {"24.441754351848147`"},
+    {"55.265429182389354`"}
+   }], ")"}]], "Output",
+ CellChangeTimes->{3.541181598493422*^9, 3.541181635136858*^9, 
+  3.5411816687392282`*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Calculating Mean Trait Lifetimes for Safi Symposium Theta Values\
+\>", "Section",
+ CellChangeTimes->{{3.53998722868252*^9, 3.539987239911524*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"meant", "[", 
+   RowBox[{"N_", ",", " ", "\[Theta]_"}], "]"}], " ", ":=", " ", 
+  RowBox[{
+   UnderoverscriptBox["\[Sum]", 
+    RowBox[{"j", "=", "1"}], "\[Infinity]"], 
+   RowBox[{
+    FractionBox[
+     RowBox[{"2", "N"}], 
+     RowBox[{"j", 
+      RowBox[{"(", 
+       RowBox[{"j", "-", "1", "+", " ", "\[Theta]"}], ")"}]}]], 
+    RowBox[{"(", 
+     RowBox[{"1", "-", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"1", "-", " ", 
+         FractionBox["1", "N"]}], ")"}], "^", "j"}]}], ")"}]}]}]}]], "Input",
+ CellChangeTimes->{{3.5399867750199738`*^9, 3.5399868317806787`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"meant", "[", 
+   RowBox[{"1000", ",", " ", "10"}], "]"}], " ", "//", " ", "N"}]], "Input",
+ CellChangeTimes->{{3.5399868519042683`*^9, 3.539986857270771*^9}}],
+
+Cell[BoxData["10.212572347414168`"], "Output",
+ CellChangeTimes->{3.539986858471225*^9, 3.5411815333216753`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"params", " ", "=", " ", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"2000", ",", " ", "2"}], "}"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"2000", ",", " ", "4"}], "}"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"2000", ",", " ", "8"}], "}"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"2000", ",", " ", "12"}], "}"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"2000", ",", " ", "16"}], "}"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"2000", ",", " ", "20"}], "}"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"2000", ",", " ", "40"}], "}"}]}], "}"}]}]], "Input",
+ CellChangeTimes->{{3.5399868646247873`*^9, 3.539986866113022*^9}, {
+  3.53998703058241*^9, 3.5399870778532352`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"(", GridBox[{
+    {"2000", "2"},
+    {"2000", "4"},
+    {"2000", "8"},
+    {"2000", "12"},
+    {"2000", "16"},
+    {"2000", "20"},
+    {"2000", "40"}
+   }], ")"}]], "Output",
+ CellChangeTimes->{3.5399870789690943`*^9, 3.5411815333666477`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Apply", "[", 
+   RowBox[{"meant", ",", " ", "params", ",", " ", 
+    RowBox[{"{", "1", "}"}]}], "]"}], " ", "//", " ", "N"}]], "Input",
+ CellChangeTimes->{{3.539987083273054*^9, 3.539987111571824*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "15.209409623896114`", ",", "13.549185317889862`", ",", 
+   "12.041662496963044`", ",", "11.198117829911643`", ",", 
+   "10.611244516104705`", ",", "10.161560421750014`", ",", 
+   "8.7918711687734`"}], "}"}]], "Output",
+ CellChangeTimes->{{3.539987096860154*^9, 3.5399871161412277`*^9}, 
+   3.5411815340375843`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"params2", " ", "=", " ", 
+  RowBox[{"{", 
+   RowBox[{
+   "0.1", ",", " ", "0.25", ",", " ", "0.5", ",", " ", "1", ",", " ", "2", 
+    ",", " ", "5", ",", " ", "10", ",", " ", "20", ",", " ", "30", ",", " ", 
+    "40", ",", " ", "50", ",", " ", "60", ",", " ", "70", ",", " ", "80", ",",
+     " ", "90", ",", " ", "100"}], "}"}]}]], "Input",
+ CellChangeTimes->{{3.540139959125037*^9, 3.5401400013725653`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "0.1`", ",", "0.25`", ",", "0.5`", ",", "1", ",", "2", ",", "5", ",", "10", 
+   ",", "20", ",", "30", ",", "40", ",", "50", ",", "60", ",", "70", ",", 
+   "80", ",", "90", ",", "100"}], "}"}]], "Output",
+ CellChangeTimes->{3.540140003599883*^9, 3.5411815340738907`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Apply", "[", 
+   RowBox[{
+    RowBox[{"meant", "[", 
+     RowBox[{"2000", ",", " ", "x"}], "]"}], ",", " ", "params2", ",", " ", 
+    RowBox[{"{", "1", "}"}]}], "]"}], " ", "//", " ", "N"}]], "Input",
+ CellChangeTimes->{{3.540140007152548*^9, 3.54014002728419*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "0.1`", ",", "0.25`", ",", "0.5`", ",", "1.`", ",", "2.`", ",", "5.`", ",", 
+   "10.`", ",", "20.`", ",", "30.`", ",", "40.`", ",", "50.`", ",", "60.`", 
+   ",", "70.`", ",", "80.`", ",", "90.`", ",", "100.`"}], "}"}]], "Output",
+ CellChangeTimes->{3.540140028628069*^9, 3.5411815341853247`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"p3", " ", "=", " ", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"2000", ",", " ", "0.1"}], "}"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"2000", ",", " ", "0.25"}], "}"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"2000", ",", " ", "0.5"}], "}"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"2000", ",", " ", "1"}], "}"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"2000", ",", " ", "2"}], "}"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"2000", ",", " ", "5"}], "}"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"2000", ",", " ", "10"}], "}"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"2000", ",", " ", "20"}], "}"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"2000", ",", " ", "30"}], "}"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"2000", ",", " ", "40"}], "}"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"2000", ",", " ", "50"}], "}"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"2000", ",", " ", "60"}], "}"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"2000", ",", " ", "70"}], "}"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"2000", ",", " ", "80"}], "}"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"2000", ",", " ", "90"}], "}"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"2000", ",", " ", "100"}], "}"}]}], "}"}]}]], "Input",
+ CellChangeTimes->{{3.540140105329877*^9, 3.5401401954617023`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"(", GridBox[{
+    {"2000", "0.1`"},
+    {"2000", "0.25`"},
+    {"2000", "0.5`"},
+    {"2000", "1"},
+    {"2000", "2"},
+    {"2000", "5"},
+    {"2000", "10"},
+    {"2000", "20"},
+    {"2000", "30"},
+    {"2000", "40"},
+    {"2000", "50"},
+    {"2000", "60"},
+    {"2000", "70"},
+    {"2000", "80"},
+    {"2000", "90"},
+    {"2000", "100"}
+   }], ")"}]], "Output",
+ CellChangeTimes->{3.540140196391098*^9, 3.5411815343401747`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Apply", "[", 
+   RowBox[{"meant", ",", " ", "p3", ",", " ", 
+    RowBox[{"{", "1", "}"}]}], "]"}], " ", "//", " ", "N"}]], "Input",
+ CellChangeTimes->{{3.5401402374573298`*^9, 3.540140249651855*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "36.895330918401385`", ",", "24.503374763783842`", ",", 
+   "19.97651594781928`", ",", "17.205856693175054`", ",", 
+   "15.209409623896114`", ",", "13.052199651347443`", ",", 
+   "11.574786971070372`", ",", "10.161560421750014`", ",", 
+   "9.355506845536231`", ",", "8.7918711687734`", ",", "8.359488345118484`", 
+   ",", "8.009485298750553`", ",", "7.716003161221791`", ",", 
+   "7.463695958670977`", ",", 
+   "7.24270967735507539965994180943470588867`15.321755780234025", ",", 
+   "7.04634080262593037351144550356103860814`15.308723831090802"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.540140253776011*^9, 3.541181536622694*^9}]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{740, 857},
+WindowMargins->{{Automatic, 316}, {37, Automatic}},
+PrintingCopies->1,
+PrintingPageRange->{1, Automatic},
+FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (October 5, \
+2011)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 146, 3, 67, "Section"],
+Cell[728, 27, 573, 9, 56, "Text"],
+Cell[CellGroupData[{
+Cell[1326, 40, 375, 12, 27, "Input"],
+Cell[1704, 54, 295, 8, 49, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2036, 67, 257, 6, 27, "Input"],
+Cell[2296, 75, 180, 3, 27, "Output"]
+}, Open  ]],
+Cell[2491, 81, 721, 13, 86, "Text"],
+Cell[CellGroupData[{
+Cell[3237, 98, 498, 15, 46, "Input"],
+Cell[3738, 115, 1168, 34, 79, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4943, 154, 314, 8, 27, "Input"],
+Cell[5260, 164, 156, 3, 27, "Output"]
+}, Open  ]],
+Cell[5431, 170, 962, 16, 101, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6430, 191, 101, 1, 67, "Section"],
+Cell[6534, 194, 486, 8, 56, "Text"],
+Cell[7023, 204, 373, 10, 49, "Input"],
+Cell[CellGroupData[{
+Cell[7421, 218, 217, 6, 27, "Input"],
+Cell[7641, 226, 139, 2, 27, "Output"]
+}, Open  ]],
+Cell[7795, 231, 491, 9, 86, "Text"],
+Cell[8289, 242, 611, 19, 56, "Input"],
+Cell[CellGroupData[{
+Cell[8925, 265, 241, 6, 27, "Input"],
+Cell[9169, 273, 164, 2, 27, "Output"]
+}, Open  ]],
+Cell[9348, 278, 246, 4, 41, "Text"],
+Cell[9597, 284, 16, 0, 26, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9650, 289, 182, 4, 67, "Section"],
+Cell[9835, 295, 232, 4, 41, "Text"],
+Cell[10070, 301, 228, 4, 27, "Input"],
+Cell[CellGroupData[{
+Cell[10323, 309, 405, 10, 27, "Input"],
+Cell[10731, 321, 148, 2, 27, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[10916, 328, 361, 9, 27, "Input"],
+Cell[11280, 339, 134, 2, 27, "Output"]
+}, Open  ]],
+Cell[11429, 344, 499, 8, 56, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11965, 357, 135, 3, 67, "Section"],
+Cell[12103, 362, 364, 6, 41, "Text"],
+Cell[CellGroupData[{
+Cell[12492, 372, 492, 14, 46, "Input"],
+Cell[12987, 388, 1224, 35, 79, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[14248, 428, 348, 9, 27, "Input"],
+Cell[14599, 439, 156, 3, 27, "Output"]
+}, Open  ]],
+Cell[14770, 445, 390, 6, 41, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[15197, 456, 143, 3, 67, "Section"],
+Cell[CellGroupData[{
+Cell[15365, 463, 561, 17, 46, "Input"],
+Cell[15929, 482, 691, 21, 27, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16657, 508, 295, 8, 27, "Input"],
+Cell[16955, 518, 158, 3, 27, "Output"]
+}, Open  ]],
+Cell[17128, 524, 549, 11, 41, "Text"],
+Cell[17680, 537, 92, 1, 27, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[17809, 543, 150, 3, 67, "Section"],
+Cell[17962, 548, 16, 0, 26, "Text"],
+Cell[17981, 550, 387, 7, 41, "Text"],
+Cell[CellGroupData[{
+Cell[18393, 561, 253, 6, 27, "Input"],
+Cell[18649, 569, 198, 5, 27, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[18884, 579, 268, 8, 27, "Input"],
+Cell[19155, 589, 131, 2, 27, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[19323, 596, 292, 8, 27, "Input"],
+Cell[19618, 606, 132, 2, 27, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[19787, 613, 270, 8, 27, "Input"],
+Cell[20060, 623, 132, 2, 27, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[20229, 630, 293, 8, 27, "Input"],
+Cell[20525, 640, 132, 2, 27, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[20694, 647, 293, 8, 27, "Input"],
+Cell[20990, 657, 134, 2, 27, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[21161, 664, 295, 8, 27, "Input"],
+Cell[21459, 674, 133, 2, 27, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[21629, 681, 295, 8, 27, "Input"],
+Cell[21927, 691, 131, 2, 27, "Output"]
+}, Open  ]],
+Cell[22073, 696, 629, 19, 46, "Input"],
+Cell[CellGroupData[{
+Cell[22727, 719, 153, 3, 27, "Input"],
+Cell[22883, 724, 192, 4, 47, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[23112, 733, 120, 2, 27, "Input"],
+Cell[23235, 737, 133, 2, 27, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[23405, 744, 627, 18, 27, "Input"],
+Cell[24035, 764, 248, 10, 125, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[24320, 779, 230, 5, 27, "Input"],
+Cell[24553, 786, 322, 10, 125, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[24912, 801, 552, 14, 27, "Input"],
+Cell[25467, 817, 231, 8, 77, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[25735, 830, 233, 5, 27, "Input"],
+Cell[25971, 837, 270, 8, 79, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[26290, 851, 156, 3, 67, "Section"],
+Cell[26449, 856, 621, 19, 56, "Input"],
+Cell[CellGroupData[{
+Cell[27095, 879, 193, 4, 27, "Input"],
+Cell[27291, 885, 112, 1, 27, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[27440, 891, 726, 19, 43, "Input"],
+Cell[28169, 912, 266, 10, 125, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[28472, 927, 236, 5, 27, "Input"],
+Cell[28711, 934, 357, 8, 27, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[29105, 947, 432, 8, 27, "Input"],
+Cell[29540, 957, 311, 6, 27, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[29888, 968, 300, 7, 27, "Input"],
+Cell[30191, 977, 337, 6, 27, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[30565, 988, 1352, 36, 58, "Input"],
+Cell[31920, 1026, 452, 19, 269, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[32409, 1050, 234, 5, 27, "Input"],
+Cell[32646, 1057, 674, 13, 43, "Output"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
